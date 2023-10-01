@@ -1,7 +1,12 @@
 <script lang="ts">
     import {onMount} from 'svelte'
+    import Statbar from './groups/statbar.svelte';
+    import Map from './groups/map.svelte';
+    import Bottomsheet from './groups/bottomsheet.svelte';
+    import { GameState } from '../state/GameState';
 
     let count: number = 0
+    let state: GameState = new GameState();
 
     onMount(() => {
       const interval = setInterval(() => count++, 1000)
@@ -12,6 +17,9 @@
 </script>
 
 <div class="App">
+  <Statbar {state}></Statbar>
+  <Map {state}></Map>
+  <Bottomsheet {state}></Bottomsheet>
 </div>
 
 <style>
