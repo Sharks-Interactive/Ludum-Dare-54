@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { GameState } from "src/state/GameState";
+    import type { GameState } from "../../state/GameState";
     import Planet from "../comps/planet.svelte";
     import { Vector } from "../../state/Vector";
     export let state: GameState;
@@ -16,7 +16,7 @@
             mouseStart.x = pointer.clientX;
             mouseStart.y = pointer.clientY;
 
-            mouseStart.subtract(offset);
+            mouseStart = mouseStart.subtract(offset);
         }
     }
 
@@ -38,7 +38,7 @@
 
 <div id="map" class="container" style="transform: translate({offset.x}px, {offset.y}px);" on:pointermove={drag} on:pointerdown={start}>
     {#each state.planets as planet}
-        <Planet {planet}></Planet>
+        <Planet {planet} {state}></Planet>
     {/each}
 </div>
 
@@ -50,14 +50,7 @@
         max-width: none;
 
         position: fixed;
-        display: flex;
-        
-        align-items: center;
-        justify-content: center;
-
-        flex-direction: column;
-
-        gap: 0;
+        margin: 0;
 
         cursor: move;
         z-index: 0;

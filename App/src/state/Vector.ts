@@ -4,6 +4,14 @@ export class Vector {
         this.data[1] = y;
     }
 
+    clone() {
+        let v = new Vector();
+        v.data[0] = this.x;
+        v.data[1] = this.y;
+        
+        return v;
+    }
+
     data: number[] = [0, 0];
 
     get x() { return this.data[0]; }
@@ -12,21 +20,23 @@ export class Vector {
     set x(val: number) { this.data[0] = val; }
     set y(val: number) { this.data[1] = val; }
 
-    subtract(vector: Vector) {
-        this.x -= vector.x;
-        this.y -= vector.y;
+    subtract(vector: Vector): Vector {
+        let v = new Vector(this.x, this.y);
+        v.x -= vector.x;
+        v.y -= vector.y;
 
-        return this;
-    }
-    
-    add(vector: Vector) {
-        this.x += vector.x;
-        this.y += vector.y;
-
-        return this;
+        return v;
     }
 
-    equals(vector: Vector) {
+    add(vector: Vector): Vector {
+        let v = new Vector(this.x, this.y);
+        v.x += vector.x;
+        v.y += vector.y;
+
+        return v;
+    }
+
+    equals(vector: Vector): Vector {
         this.x = vector.x;
         this.y = vector.y;
 

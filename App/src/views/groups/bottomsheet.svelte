@@ -1,5 +1,10 @@
+<script lang="ts">
+    import type { GameState } from "../../state/GameState";
 
-<div class="container">
+    export let state: GameState;
+</script>
+
+<div class="container {state.selected != undefined ? 'active' : ''}">
 
 </div>
 
