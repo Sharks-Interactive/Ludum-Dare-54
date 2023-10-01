@@ -20,7 +20,8 @@
 
         background-color: #14191d;
         filter: drop-shadow(0px 5px 5px #08051641);
-
+        
+        z-index: 1;
         padding: 25px;
     }
 </style>

@@ -6,6 +6,9 @@ var app = new App({
 
 export default app;
 
+document.body.onpointerup = () => window.dragging = false;
+document.body.onpointerdown = () => window.dragging = true;
+
 if (import.meta.hot) {
   import.meta.hot.accept();
   import.meta.hot.dispose(() => {

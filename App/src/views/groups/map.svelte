@@ -1,66 +1,42 @@
 <script lang="ts">
     import type { GameState } from "src/state/GameState";
-
     import Planet from "../comps/planet.svelte";
     import { Vector } from "../../state/Vector";
-    import { onMount } from "svelte";
     export let state: GameState;
 
-    let offset = new Vector();
+    let offset = new Vector(-5000, -5000);
 
     let mouseStart = new Vector();
     let mousePos = new Vector();
 
-    let dragging = false;
-
     function start (event: any) {
-        if (event instanceof TouchEvent) {
-            let touch = event as TouchEvent;
+        if (event instanceof PointerEvent) {
+            let pointer = event as PointerEvent;
 
-            mouseStart.x = touch.touches[0].clientX;
-            mouseStart.y = touch.touches[0].clientY;
+            mouseStart.x = pointer.clientX;
+            mouseStart.y = pointer.clientY;
 
-            mouseStart.add(offset);
-        }
-        if (event instanceof MouseEvent) {
-            let mouse = event as MouseEvent;
-
-            mouseStart.x = mouse.clientX;
-            mouseStart.y = mouse.clientY;
-
-            mouseStart.add(offset);
-
-            dragging = true;
+            mouseStart.subtract(offset);
         }
     }
 
     function drag (event: any) {
-        if (event instanceof TouchEvent) {
-            let touch = event as TouchEvent;
+        if (event instanceof PointerEvent) {
+            let pointer = event as PointerEvent;
 
-            mousePos.x = touch.touches[0].clientX;
-            mousePos.y = touch.touches[0].clientY;
+            if (pointer.buttons == 0) return;
 
-            offset = mousePos.subtract(mouseStart);
-
-            event.preventDefault();
-        }
-        else if (event instanceof MouseEvent) {
-            let mouse = event as MouseEvent;
-            if (!dragging) return;
-
-            mousePos.x = mouse.clientX;
-            mousePos.y = mouse.clientY;
+            mousePos.x = pointer.clientX;
+            mousePos.y = pointer.clientY;
 
             offset = mousePos.subtract(mouseStart);
 
             event.preventDefault();
         }
-        console.log(event);
     }
 </script>
 
-<div id="map" class="container" style="transform: translate({offset.x}px, {offset.y}px);" on:touchmove={drag} on:mousemove={drag} on:touchstart={start} on:mousedown={start} on:mouseup={() => dragging = false}>
+<div id="map" class="container" style="transform: translate({offset.x}px, {offset.y}px);" on:pointermove={drag} on:pointerdown={start}>
     {#each state.planets as planet}
         <Planet {planet}></Planet>
     {/each}
@@ -68,8 +44,24 @@
 
 <style>
     .container {
-        cursor: move;
+        width: 10000px;
+        height: 10000px;
 
+        max-width: none;
+
+        position: fixed;
+        display: flex;
+        
+        align-items: center;
+        justify-content: center;
+
+        flex-direction: column;
+
+        gap: 0;
+
+        cursor: move;
         z-index: 0;
+
+        touch-action: none;
     }
 </style>

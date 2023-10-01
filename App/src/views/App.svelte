@@ -18,6 +18,7 @@
 
 <div class="App">
   <Statbar {state}></Statbar>
+  <div></div>
   <Map {state}></Map>
   <Bottomsheet {state}></Bottomsheet>
 </div>

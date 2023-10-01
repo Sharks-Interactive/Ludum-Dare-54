@@ -1,7 +1,7 @@
 export class Vector {
     constructor(x = 0, y = 0) {
         this.data[0] = x;
-        this.data[0] = y;
+        this.data[1] = y;
     }
 
     data: number[] = [0, 0];
