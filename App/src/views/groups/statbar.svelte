@@ -1,13 +1,15 @@
-<script>
+<script lang="ts">
+    import type { GameState } from "../../state/GameState";
     import IconLabel from "../comps/iconLabel.svelte";
 
+    export let state: GameState;
 </script>
 
 <div class="container">
-    <IconLabel icon="💵"></IconLabel>
-    <IconLabel icon="🔌"></IconLabel>
-    <IconLabel icon="👍"></IconLabel>
-    <IconLabel icon="💎"></IconLabel>
+    <IconLabel icon="💵" value="{state.stats[0]}"></IconLabel>
+    <IconLabel icon="🔌" value="{state.stats[1]}"></IconLabel>
+    <IconLabel icon="👍" value="{state.stats[2]}"></IconLabel>
+    <IconLabel icon="💎" value="{state.stats[3]}"></IconLabel>
 </div>
 
 <style>

@@ -2,9 +2,10 @@
     import type { GameState } from "../../state/GameState";
     import Planet from "../comps/planet.svelte";
     import { Vector } from "../../state/Vector";
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import Connections from "../comps/connections.svelte";
     import Ship from "../comps/ship.svelte";
+    import { mapToWorld, worldToMap } from "../../state/Map";
     export let state: GameState;
 
     const dispatch = createEventDispatcher();
@@ -48,6 +49,10 @@
 
         dispatch('selection', { index: -1 });
     }
+
+    onMount(() => {
+        offset = worldToMap(state.planets[0].position).multiplied(-1).add(new Vector(window.innerWidth / 2, window.innerHeight / 2));
+    });
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

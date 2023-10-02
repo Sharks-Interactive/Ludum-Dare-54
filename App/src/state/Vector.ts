@@ -46,6 +46,14 @@ export class Vector {
         return v;
     }
 
+    multiplied(multiple: number): Vector {
+        let v = new Vector(this.x, this.y);
+        v.x *= multiple;
+        v.y *= multiple;
+
+        return v;
+    }
+
     equals(vector: Vector): Vector {
         this.x = vector.x;
         this.y = vector.y;

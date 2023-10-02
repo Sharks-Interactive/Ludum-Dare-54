@@ -6,6 +6,7 @@
     import { GameState } from '../state/GameState';
     import { Ship } from '../state/Ship';
     import { Planet } from '../state/Planet';
+    import type { Building } from 'src/state/Building';
 
     let count: number = 0
     let state: GameState = new GameState();
@@ -24,6 +25,17 @@
       }
     }
 
+    function purchase(event: any) {
+      let building: Building = event.detail.building;
+
+      if (state.selected instanceof Planet) {
+        state.selected.built = [...state.selected.built, building];
+        state.selected.buildings = state.selected.buildings.filter(e => e.title != building.title);
+
+        state.stats[0] -= building.cost[0];
+      }
+    }
+
     onMount(() => {
       const interval = setInterval(() => count++, 1000)
       return () => {
@@ -34,9 +46,11 @@
 
 <div class="App">
   <Statbar {state}></Statbar>
-  <div></div>
+  <div>
+    <button type="button" on:click={() => { state.advance(); state.turns += 1;}} style="position: absolute; bottom: 80px; left: 0; right: 0; 100%; margin: 15px; z-index: 1;" class="btn btn-outline-danger align-end">Advance / Next Turn</button>
+  </div>
   <Map {state} on:selection={changeSelection}></Map>
-  <Bottomsheet {state}></Bottomsheet>
+  <Bottomsheet {state} on:purchase={purchase}></Bottomsheet>
 </div>
 
 <style>
