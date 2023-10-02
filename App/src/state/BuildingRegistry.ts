@@ -3,7 +3,7 @@ import { Markets } from "./Buildings/Markets";
 import { Mine } from "./Buildings/Mine";
 import { Nuclear } from "./Buildings/Nuclear";
 import { Park } from "./Buildings/Park";
-import { Planet } from "./Planet";
+import type { Planet } from "./Planet";
 
 const mineralBuildings = [
     new Mine(),
