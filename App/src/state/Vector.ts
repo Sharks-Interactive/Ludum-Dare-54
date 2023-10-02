@@ -4,6 +4,8 @@ export class Vector {
         this.data[1] = y;
     }
 
+    static square = (xy = 0) => new Vector(xy, xy);
+
     clone() {
         let v = new Vector();
         v.data[0] = this.x;
@@ -36,10 +38,25 @@ export class Vector {
         return v;
     }
 
+    divided(divisor: number): Vector {
+        let v = new Vector(this.x, this.y);
+        v.x /= divisor;
+        v.y /= divisor;
+
+        return v;
+    }
+
     equals(vector: Vector): Vector {
         this.x = vector.x;
         this.y = vector.y;
 
         return this;
+    }
+
+    distance(vector: Vector): number {
+        return Math.sqrt(
+            (Math.pow(this.x - vector.x, 2)) +
+            (Math.pow(this.y - vector.y, 2))
+        );
     }
 }

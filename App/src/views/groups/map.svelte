@@ -2,7 +2,12 @@
     import type { GameState } from "../../state/GameState";
     import Planet from "../comps/planet.svelte";
     import { Vector } from "../../state/Vector";
+    import { createEventDispatcher } from "svelte";
+    import Connections from "../comps/connections.svelte";
+    import Ship from "../comps/ship.svelte";
     export let state: GameState;
+
+    const dispatch = createEventDispatcher();
 
     let offset = new Vector(-5000, -5000);
 
@@ -34,11 +39,25 @@
             event.preventDefault();
         }
     }
+
+    function select (event: any) {
+        if (event.detail.index != undefined) {
+            dispatch('selection', event.detail);
+            return;
+        }
+
+        dispatch('selection', { index: -1 });
+    }
 </script>
 
-<div id="map" class="container" style="transform: translate({offset.x}px, {offset.y}px);" on:pointermove={drag} on:pointerdown={start}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div id="map" class="container" style="transform: translate({offset.x}px, {offset.y}px);" on:pointermove={drag} on:pointerdown={start} on:click={select}>
     {#each state.planets as planet}
-        <Planet {planet} {state}></Planet>
+        <Planet {planet} {state} on:selection={select}></Planet>
+    {/each}
+    <Connections {state}></Connections>
+    {#each state.ships as ship}
+       <Ship {ship} {state} on:selection={select}></Ship> 
     {/each}
 </div>
 
